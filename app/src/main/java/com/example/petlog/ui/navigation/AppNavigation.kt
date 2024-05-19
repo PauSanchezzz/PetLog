@@ -13,7 +13,7 @@ fun AppNavigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = AppScreens.HomeScreen.route) {
         composable(route = AppScreens.HomeScreen.route) {
-            HomeScreen()
+            HomeScreen(navController)
         }
         composable(route = AppScreens.AddPetScreen.route) {
             AddPetScreen()
