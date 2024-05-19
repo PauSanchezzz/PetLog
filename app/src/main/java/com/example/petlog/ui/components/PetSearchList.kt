@@ -1,7 +1,9 @@
 package com.example.petlog.ui.components
 
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -25,7 +27,10 @@ fun PetSearchList(onTap: () -> Unit) {
         active = true,
         onActiveChange = {},
     ) {
-        LazyColumn {
+        Spacer(modifier = Modifier.height(20.dp))
+        LazyColumn(
+            modifier = Modifier.padding(horizontal = 10.dp),
+        ) {
             items(10) {
                 PetCard(
                     title = "Name",

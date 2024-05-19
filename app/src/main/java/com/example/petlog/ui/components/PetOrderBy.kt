@@ -12,6 +12,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -25,40 +31,50 @@ fun PetOrderBy() {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            "Order by:",
+            "Ordenado por:",
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Medium,
         )
         Spacer(modifier = Modifier.width(10.dp))
-        ExposedDropdownMenuBox(
-            expanded = false,
-            onExpandedChange = {
-            }
+        PetOrderByMenu()
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PetOrderByMenu() {
+    val items = listOf("Nombre", "Raza", "Edad")
+    var selectedItemIndex by remember { mutableIntStateOf(0) }
+    var expandedState by remember { mutableStateOf(false) }
+    ExposedDropdownMenuBox(
+        expanded = expandedState,
+        onExpandedChange = {
+            expandedState = it
+        }
+    ) {
+        TextField(
+            value = items[selectedItemIndex],
+            onValueChange = {},
+            readOnly = true,
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = true) },
+            modifier = Modifier.menuAnchor()
+        )
+        ExposedDropdownMenu(
+            expanded = expandedState,
+            onDismissRequest = { expandedState = false },
         ) {
-            TextField(
-                value = "breed",
-                onValueChange = {},
-                readOnly = true,
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = true) },
-                modifier = Modifier.menuAnchor()
-            )
-            ExposedDropdownMenu(
-                expanded = false,
-                onDismissRequest = { }
-            ) {
+            items.forEachIndexed { index, item ->
                 DropdownMenuItem(
-                    text = { Text("breed") },
-                    onClick = { }
-                )
-                DropdownMenuItem(
-                    text = { Text("name") },
-                    onClick = { }
-                )
-                DropdownMenuItem(
-                    text = { Text("age") },
-                    onClick = { }
+                    text = {
+                        Text(item)
+                    },
+                    onClick = {
+                        selectedItemIndex = index
+                        expandedState = false
+                    }
                 )
             }
+
         }
     }
 }
