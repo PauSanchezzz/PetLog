@@ -10,10 +10,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import androidx.compose.ui.unit.dp
 import com.example.petlog.ui.components.PetOrderBy
@@ -32,9 +34,13 @@ fun HomeScreen(navController: NavController) {
                 shape = RoundedCornerShape(30),
                 onClick = { navController.navigate(AppScreens.AddPetScreen.route) },
             ) {
-                Icon(Icons.Filled.Add, contentDescription = "Add Pet")
+                Icon(Icons.Filled.Add, contentDescription = "añadir mascota")
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Add Pet")
+                Text(
+                    text = "Añadir\nMascota",
+                    style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.Center,
+                )
             }
         },
     ) {
