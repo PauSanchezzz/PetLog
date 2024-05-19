@@ -16,7 +16,7 @@ fun AppNavigation() {
             HomeScreen(navController)
         }
         composable(route = AppScreens.AddPetScreen.route) {
-            AddPetScreen()
+            AddPetScreen(navController)
         }
         composable(route = AppScreens.PetDetailScreen.route) {
             PetDetailScreen()
