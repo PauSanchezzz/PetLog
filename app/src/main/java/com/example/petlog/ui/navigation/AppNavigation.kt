@@ -19,7 +19,7 @@ fun AppNavigation() {
             AddPetScreen(navController)
         }
         composable(route = AppScreens.PetDetailScreen.route) {
-            PetDetailScreen()
+            PetDetailScreen(navController)
         }
     }
 
