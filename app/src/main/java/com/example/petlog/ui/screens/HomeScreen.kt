@@ -16,15 +16,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.navigation.NavController
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.petlog.data.model.GetPetsResponseItem
 import com.example.petlog.ui.components.PetOrderBy
 import com.example.petlog.ui.components.PetSearchList
 import com.example.petlog.ui.components.PetTopAppBar
 import com.example.petlog.ui.navigation.AppScreens
+import com.example.petlog.ui.viewModel.PetsViewModel
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(
+    navController: NavController,
+    viewModel: PetsViewModel,
+    listaMascotas: List<GetPetsResponseItem>
+) {
+
     Scaffold(
         topBar = {
             PetTopAppBar("PetLog")
@@ -51,7 +58,10 @@ fun HomeScreen(navController: NavController) {
         ) {
             PetOrderBy()
             Spacer(modifier = Modifier.height(10.dp))
-            PetSearchList(onTap = { navController.navigate(AppScreens.PetDetailScreen.route) })
+            PetSearchList(
+                onTap = { navController.navigate(AppScreens.PetDetailScreen.route) },
+                mascota = listaMascotas
+            )
         }
     }
 }

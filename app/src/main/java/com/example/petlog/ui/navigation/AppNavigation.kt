@@ -7,13 +7,14 @@ import androidx.navigation.compose.rememberNavController
 import com.example.petlog.ui.screens.AddPetScreen
 import com.example.petlog.ui.screens.HomeScreen
 import com.example.petlog.ui.screens.PetDetailScreen
+import com.example.petlog.ui.viewModel.PetsViewModel
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(viewModel: PetsViewModel) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = AppScreens.HomeScreen.route) {
         composable(route = AppScreens.HomeScreen.route) {
-            HomeScreen(navController)
+            HomeScreen(navController,viewModel,viewModel._listamascota)
         }
         composable(route = AppScreens.AddPetScreen.route) {
             AddPetScreen(navController)
