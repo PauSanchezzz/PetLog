@@ -77,14 +77,12 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     //Coil
-    /*implementation("io.coil-kt:coil-compose:2.2.2")*/
-    /*implementation("io.coil-kt:coil-compose:2.0.0-rc01")*/
     implementation("io.coil-kt:coil-compose:2.6.0")
+
     //Icons
     implementation("androidx.compose.material:material-icons-extended:1.3.1")
 
     //Hilt
-
     val hilt_navigation_compose_version = "1.0.0"
     val hilt_version = "2.44"
 
