@@ -28,13 +28,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.petlog.ui.components.PetBreed
+import com.example.petlog.ui.components.AppDropdownMenu
 import com.example.petlog.ui.components.PetTopAppBar
-import com.example.petlog.ui.components.PetType
-import com.example.petlog.ui.navigation.AppScreens
 
 @Composable
 fun AddPetScreen(navController: NavController) {
+    val spacerHeightModifier = Modifier.height(15.dp)
     Scaffold(
         topBar = {
             PetTopAppBar("PetLog")
@@ -58,53 +57,43 @@ fun AddPetScreen(navController: NavController) {
                 textAlign = TextAlign.Left,
                 color = MaterialTheme.colorScheme.primary
             )
-            Spacer(modifier = Modifier.height(35.dp))
-
-            OutlinedTextField(
-                shape = RoundedCornerShape(25),
+            Spacer(Modifier.height(35.dp))
+            OutlinedTextField(shape = RoundedCornerShape(25),
                 value = "",
                 onValueChange = { /*TODO*/ },
-                label = { Text("Nombre") }
-            )
-            PetType()
-
-            OutlinedTextField(
-                shape = RoundedCornerShape(25),
+                label = { Text("Nombre") })
+            Spacer(spacerHeightModifier)
+            AppDropdownMenu(listOf("Gato", "Perro"))
+            Spacer(spacerHeightModifier)
+            OutlinedTextField(shape = RoundedCornerShape(25),
                 value = "",
                 onValueChange = { /*TODO*/ },
-                label = { Text("Edad") }
-            )
-            PetBreed()
-            ElevatedButton(
-                onClick = { /*TODO*/ }) {
+                label = { Text("Edad") })
+            Spacer(spacerHeightModifier)
+            AppDropdownMenu(listOf("Calico", "Tuxedo", "bulldog", "pitbull"))
+            Spacer(spacerHeightModifier)
+            ElevatedButton(onClick = { /*TODO*/ }) {
                 Text(
-                    text = "Imagen", modifier = Modifier
-                        .padding(horizontal = 90.dp)
+                    text = "Imagen", modifier = Modifier.padding(horizontal = 90.dp)
                 )
             }
             Spacer(modifier = Modifier.height(50.dp))
-
             Row(
-                modifier = Modifier
-                    .padding(bottom = 80.dp),
+                modifier = Modifier.padding(bottom = 80.dp),
                 verticalAlignment = Alignment.Bottom,
                 horizontalArrangement = Arrangement.Center
             ) {
-
                 OutlinedButton(
                     border = BorderStroke(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.secondary
+                        width = 1.dp, color = MaterialTheme.colorScheme.secondary
                     ),
                     onClick = { /*TODO*/ },
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                 ) {
                     Text(text = "Guardar", color = MaterialTheme.colorScheme.onPrimary)
                 }
-
-                Spacer(modifier = Modifier.width(50.dp))
-
-                OutlinedButton(onClick = {navController.navigate(AppScreens.HomeScreen.route) }) {
+                Spacer(Modifier.width(50.dp))
+                OutlinedButton(onClick = { navController.popBackStack() }) {
                     Text("Atras")
                 }
 
