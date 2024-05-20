@@ -1,4 +1,4 @@
-package com.example.petlog.data.dto
+package com.example.petlog.data.model
 
 data class GetPetsResponseItem(
     val _id: String,

@@ -14,13 +14,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.petlog.data.model.GetPetsResponseItem
 import com.example.petlog.ui.components.PetOrderBy
 import com.example.petlog.ui.components.PetSearchList
 import com.example.petlog.ui.components.PetTopAppBar
@@ -28,8 +26,11 @@ import com.example.petlog.ui.navigation.AppScreens
 import com.example.petlog.ui.viewModel.PetsViewModel
 
 @Composable
-fun HomeScreen(navController: NavController, viewModel: PetsViewModel = hiltViewModel()) {
-val state by viewModel.state.collectAsState()
+fun HomeScreen(
+    navController: NavController,
+    viewModel: PetsViewModel,
+    listaMascotas: List<GetPetsResponseItem>
+) {
 
     Scaffold(
         topBar = {
@@ -57,7 +58,10 @@ val state by viewModel.state.collectAsState()
         ) {
             PetOrderBy()
             Spacer(modifier = Modifier.height(10.dp))
-            PetSearchList(onTap = { navController.navigate(AppScreens.PetDetailScreen.route) }, listPets = state)
+            PetSearchList(
+                onTap = { navController.navigate(AppScreens.PetDetailScreen.route) },
+                mascota = listaMascotas
+            )
         }
     }
 }
