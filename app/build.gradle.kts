@@ -2,7 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
+    /*id("dagger.hilt.android.plugin")*/
+    id ("com.google.dagger.hilt.android")
 }
 
 android {
@@ -42,7 +43,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.4.3"/*"1.5.1"*/
     }
     packaging {
         resources {
@@ -83,7 +84,7 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended:1.3.1")
 
     //Hilt
-    val hilt_navigation_compose_version = "1.0.0"
+    val hilt_navigation_compose_version = "1.2.0"
     val hilt_version = "2.44"
 
     implementation("androidx.hilt:hilt-navigation-compose:$hilt_navigation_compose_version")
