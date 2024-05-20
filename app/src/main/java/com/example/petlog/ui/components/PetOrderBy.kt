@@ -36,45 +36,6 @@ fun PetOrderBy() {
             fontWeight = FontWeight.Medium,
         )
         Spacer(modifier = Modifier.width(10.dp))
-        PetOrderByMenu()
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun PetOrderByMenu() {
-    val items = listOf("Nombre", "Raza", "Edad")
-    var selectedItemIndex by remember { mutableIntStateOf(0) }
-    var expandedState by remember { mutableStateOf(false) }
-    ExposedDropdownMenuBox(
-        expanded = expandedState,
-        onExpandedChange = {
-            expandedState = it
-        }
-    ) {
-        TextField(
-            value = items[selectedItemIndex],
-            onValueChange = {},
-            readOnly = true,
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = true) },
-            modifier = Modifier.menuAnchor()
-        )
-        ExposedDropdownMenu(
-            expanded = expandedState,
-            onDismissRequest = { expandedState = false },
-        ) {
-            items.forEachIndexed { index, item ->
-                DropdownMenuItem(
-                    text = {
-                        Text(item)
-                    },
-                    onClick = {
-                        selectedItemIndex = index
-                        expandedState = false
-                    }
-                )
-            }
-
-        }
+        AppDropdownMenu(listOf("Nombre", "Raza", "Edad"))
     }
 }
