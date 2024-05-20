@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -30,11 +32,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -67,4 +69,26 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+
+    //GSON converter
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //Coil
+    /*implementation("io.coil-kt:coil-compose:2.2.2")*/
+    /*implementation("io.coil-kt:coil-compose:2.0.0-rc01")*/
+    implementation("io.coil-kt:coil-compose:2.6.0")
+    //Icons
+    implementation("androidx.compose.material:material-icons-extended:1.3.1")
+
+    //Hilt
+
+    val hilt_navigation_compose_version = "1.0.0"
+    val hilt_version = "2.44"
+
+    implementation("androidx.hilt:hilt-navigation-compose:$hilt_navigation_compose_version")
+    implementation("com.google.dagger:hilt-android:$hilt_version")
+    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
 }
