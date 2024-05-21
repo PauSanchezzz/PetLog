@@ -15,22 +15,27 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.petlog.data.model.GetPetsResponseItem
 import com.example.petlog.ui.navigation.AppScreens
+import com.example.petlog.ui.viewModel.PetsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PetSearchList(navController: NavController, mascota: List<GetPetsResponseItem>) {
+fun PetSearchList(navController: NavController, petsViewModel: PetsViewModel) {
+    val searchText = petsViewModel.searchText
+    val petsList = petsViewModel._listPet
+    val isSearching = petsViewModel._isSearching
+
     SearchBar(
         leadingIcon = {
             Icon(Icons.Filled.Search, contentDescription = "")
         },
-        query = "",
-        onQueryChange = {},
-        onSearch = {},
-        active = true,
-        onActiveChange = {},
+        query = searchText,
+        onQueryChange = petsViewModel::onSearchTextChange,
+        onSearch = petsViewModel::onSearchTextChange,
+        active = isSearching,
+        onActiveChange = { petsViewModel.onToogleSearch() },
     ) {
         LazyColumn {
-            items(mascota) {
+            items(petsList) {
                 PetCard(
                     title = it.name,
                     subtitle = it.breed,

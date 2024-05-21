@@ -1,5 +1,6 @@
 package com.example.petlog.ui.viewModel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -16,6 +17,31 @@ class PetsViewModel : ViewModel() {
 
     var _listPet: List<GetPetsResponseItem> by mutableStateOf(listOf())
     var selectedItem by mutableStateOf(listOrderBy[0])
+    var _isSearching by mutableStateOf(false)
+    var searchText by mutableStateOf("")
+
+    fun onSearchTextChange(text: String) {
+        if (searchText.length > text.length || text.isEmpty()) {
+            getPets()
+        }
+        searchText = text
+        // * Local Way
+        //_listPet = _listPet.filter { it.name.contains(text, ignoreCase = true) }
+        // * Server Way
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = RetrofitPet.webService.getPet(text)
+            withContext(Dispatchers.Main) {
+                _listPet = response
+            }
+        }
+    }
+
+    fun onToogleSearch() {
+        _isSearching = !_isSearching
+        if (!_isSearching) {
+            onSearchTextChange("")
+        }
+    }
 
     init {
         getPets()
