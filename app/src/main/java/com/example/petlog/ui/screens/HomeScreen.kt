@@ -23,12 +23,10 @@ import com.example.petlog.ui.components.PetOrderBy
 import com.example.petlog.ui.components.PetSearchList
 import com.example.petlog.ui.components.PetTopAppBar
 import com.example.petlog.ui.navigation.AppScreens
-import com.example.petlog.ui.viewModel.PetsViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavController,
-    viewModel: PetsViewModel,
     listaMascotas: List<GetPetsResponseItem>
 ) {
 
@@ -59,7 +57,7 @@ fun HomeScreen(
             PetOrderBy()
             Spacer(modifier = Modifier.height(10.dp))
             PetSearchList(
-                onTap = { navController.navigate(AppScreens.PetDetailScreen.route) },
+                navController,
                 mascota = listaMascotas
             )
         }

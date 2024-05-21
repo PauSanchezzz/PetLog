@@ -1,26 +1,33 @@
 package com.example.petlog.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.petlog.ui.screens.AddPetScreen
 import com.example.petlog.ui.screens.HomeScreen
 import com.example.petlog.ui.screens.PetDetailScreen
 import com.example.petlog.ui.viewModel.PetsViewModel
 
 @Composable
-fun AppNavigation(viewModel: PetsViewModel) {
+fun AppNavigation(PetsviewModel: PetsViewModel) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = AppScreens.HomeScreen.route) {
         composable(route = AppScreens.HomeScreen.route) {
-            HomeScreen(navController,viewModel,viewModel._listamascota)
+            HomeScreen(navController, PetsviewModel._listPet)
         }
         composable(route = AppScreens.AddPetScreen.route) {
             AddPetScreen(navController)
         }
-        composable(route = AppScreens.PetDetailScreen.route) {
-            PetDetailScreen(navController)
+        composable(
+            route = "${AppScreens.PetDetailScreen.route}/{name}",
+            arguments = listOf(navArgument("name") {
+                type = NavType.StringType
+            })
+        ) {
+            PetDetailScreen(navController, it.arguments?.getString("name").toString())
         }
     }
 
