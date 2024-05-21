@@ -9,7 +9,6 @@ import androidx.navigation.navArgument
 import com.example.petlog.ui.screens.AddPetScreen
 import com.example.petlog.ui.screens.HomeScreen
 import com.example.petlog.ui.screens.PetDetailScreen
-import com.example.petlog.ui.viewModel.PetsViewModel
 
 @Composable
 fun AppNavigation() {
