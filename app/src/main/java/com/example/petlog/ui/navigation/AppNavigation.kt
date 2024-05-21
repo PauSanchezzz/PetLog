@@ -12,11 +12,11 @@ import com.example.petlog.ui.screens.PetDetailScreen
 import com.example.petlog.ui.viewModel.PetsViewModel
 
 @Composable
-fun AppNavigation(PetsviewModel: PetsViewModel) {
+fun AppNavigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = AppScreens.HomeScreen.route) {
         composable(route = AppScreens.HomeScreen.route) {
-            HomeScreen(navController, PetsviewModel._listPet)
+            HomeScreen(navController)
         }
         composable(route = AppScreens.AddPetScreen.route) {
             AddPetScreen(navController)

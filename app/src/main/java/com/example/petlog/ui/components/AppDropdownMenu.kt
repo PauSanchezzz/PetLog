@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import com.example.petlog.ui.viewModel.PetsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

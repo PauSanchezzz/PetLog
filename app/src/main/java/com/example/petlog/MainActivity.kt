@@ -14,11 +14,10 @@ class MainActivity : ComponentActivity() {
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val petsViewModel: PetsViewModel by viewModels()
         enableEdgeToEdge()
         setContent {
             PetLogTheme {
-                AppNavigation(petsViewModel)
+                AppNavigation()
             }
         }
     }

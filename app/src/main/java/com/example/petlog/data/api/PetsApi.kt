@@ -12,4 +12,9 @@ interface PetsApi {
     suspend fun getPet(
         @Query("name") name: String
     ): List<GetPetsResponseItem>
+
+    @GET("/pets/filter")
+    suspend fun getPetsSortBy(
+        @Query("sortBy") sortBy: String
+    ): List<GetPetsResponseItem>
 }
