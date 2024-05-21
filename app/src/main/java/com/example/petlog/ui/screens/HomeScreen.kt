@@ -58,7 +58,7 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(10.dp))
             PetSearchList(
                 navController,
-                mascota = petsViewModel._listPet
+                 petsViewModel
             )
         }
     }
