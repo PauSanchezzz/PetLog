@@ -23,13 +23,13 @@ import com.example.petlog.ui.components.PetOrderBy
 import com.example.petlog.ui.components.PetSearchList
 import com.example.petlog.ui.components.PetTopAppBar
 import com.example.petlog.ui.navigation.AppScreens
+import com.example.petlog.ui.viewModel.PetsViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavController,
-    listaMascotas: List<GetPetsResponseItem>
+    petsViewModel: PetsViewModel  = PetsViewModel(),
 ) {
-
     Scaffold(
         topBar = {
             PetTopAppBar("PetLog")
@@ -54,11 +54,11 @@ fun HomeScreen(
                 .padding(it)
                 .padding(horizontal = 20.dp),
         ) {
-            PetOrderBy()
+            PetOrderBy(petsViewModel)
             Spacer(modifier = Modifier.height(10.dp))
             PetSearchList(
                 navController,
-                mascota = listaMascotas
+                mascota = petsViewModel._listPet
             )
         }
     }
