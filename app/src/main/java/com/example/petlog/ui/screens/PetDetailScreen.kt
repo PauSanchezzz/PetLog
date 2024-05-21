@@ -17,6 +17,9 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,9 +31,20 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.petlog.ui.components.PetTopAppBar
+import com.example.petlog.ui.viewModel.PetViewModel
 
 @Composable
-fun PetDetailScreen(navController: NavController) {
+fun PetDetailScreen(
+    navController: NavController, name: String,
+    petViewModel: PetViewModel = PetViewModel()
+) {
+
+    petViewModel.saveName(name)
+
+    val pet by remember {
+        derivedStateOf { petViewModel._pet }
+    }
+
     val scrollState = rememberScrollState()
     Scaffold(
         topBar = {
@@ -43,7 +57,6 @@ fun PetDetailScreen(navController: NavController) {
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .padding(it)
-                /*.padding(top = 50.dp)*/
                 .verticalScroll(scrollState),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -52,18 +65,17 @@ fun PetDetailScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
-                    .padding(vertical = 30.dp)
-                /* .padding(bottom = 80.dp)*/,
+                    .padding(vertical = 30.dp),
                 verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Nombre Mascota",
-                    fontSize = 30.sp,
-                    fontFamily = FontFamily.SansSerif,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Left,
-                    color = MaterialTheme.colorScheme.primary
+                    text = pet.name,
+                fontSize = 30.sp,
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Left,
+                color = MaterialTheme.colorScheme.primary
                 )
             }
             Column(
@@ -73,7 +85,7 @@ fun PetDetailScreen(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AsyncImage(
-                    model = "https://i.pinimg.com/736x/ea/21/05/ea21052f12b135e2f343b0c5ca8aeabc.jpg",
+                    model = pet.image,
                     contentDescription = "",
                     modifier = Modifier
                         .clip(
@@ -82,39 +94,35 @@ fun PetDetailScreen(navController: NavController) {
                         .border(3.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(10))
                 )
             }
-
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
                     .padding(vertical = 25.dp),
-                /*verticalArrangement = Arrangement.Center,*/
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Edad: ", fontSize = 20.sp,
+                    text = "Edad: ${pet.age} ", fontSize = 20.sp,
                     fontFamily = FontFamily.SansSerif,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Left,
                     color = MaterialTheme.colorScheme.primary
                 )
                 Text(
-                    text = "Tipo de Mascota: ", fontSize = 20.sp,
+                    text = "Tipo de Mascota: ${pet.type} ", fontSize = 20.sp,
                     fontFamily = FontFamily.SansSerif,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Left,
                     color = MaterialTheme.colorScheme.primary
                 )
                 Text(
-                    text = "Raza: ", fontSize = 20.sp,
+                    text = "Raza: ${pet.breed}", fontSize = 20.sp,
                     fontFamily = FontFamily.SansSerif,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Left,
                     color = MaterialTheme.colorScheme.primary
                 )
-
             }
-
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -135,7 +143,6 @@ fun PetDetailScreen(navController: NavController) {
                 }
             }
         }
-
     }
 }
 

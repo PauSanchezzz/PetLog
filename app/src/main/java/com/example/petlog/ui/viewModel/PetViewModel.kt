@@ -11,19 +11,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class PetsViewModel : ViewModel() {
+class PetViewModel : ViewModel() {
+    var _pet: GetPetsResponseItem by mutableStateOf(GetPetsResponseItem())
+    var _petName: String by mutableStateOf("")
 
-    var _listPet: List<GetPetsResponseItem> by mutableStateOf(listOf())
-
-    init {
-        getPets()
+    fun saveName(name: String) {
+        _petName = name
+        getPet(_petName)
     }
 
-    fun getPets() {
+    fun getPet(name: String) {
+
         viewModelScope.launch(Dispatchers.IO) {
-            val response = RetrofitPet.webService.getPets()
+            val response = RetrofitPet.webService.getPet(name)
             withContext(Dispatchers.Main) {
-                _listPet = response
+                val pepito = response.first()
+                _pet = pepito
             }
         }
     }
