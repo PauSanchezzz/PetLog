@@ -1,5 +1,6 @@
 package com.example.petlog.ui.screens
 
+import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -51,6 +52,7 @@ import com.example.petlog.ui.viewModel.AddPetViewModel
 @Composable
 fun AddPetScreen(
     navController: NavController,
+    context: Context,
     addPetViewModel: AddPetViewModel = AddPetViewModel()
 ) {
     val spacerHeightModifier = Modifier.height(15.dp)
@@ -92,14 +94,11 @@ fun AddPetScreen(
             var typeList = addPetViewModel.typeList
 
             var expandedState by remember { mutableStateOf(false) }
-            ExposedDropdownMenuBox(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(25)),
+            ExposedDropdownMenuBox(modifier = Modifier.clip(RoundedCornerShape(25)),
                 expanded = expandedState,
                 onExpandedChange = {
                     expandedState = it
-                }
-            ) {
+                }) {
                 TextField(
                     value = typePet,
                     onValueChange = {},
@@ -112,15 +111,12 @@ fun AddPetScreen(
                     onDismissRequest = { expandedState = false },
                 ) {
                     typeList.forEachIndexed { index, item ->
-                        DropdownMenuItem(
-                            text = {
-                                Text(item)
-                            },
-                            onClick = {
-                                addPetViewModel.onTypeChange(typeList[index])
-                                expandedState = false
-                            }
-                        )
+                        DropdownMenuItem(text = {
+                            Text(item)
+                        }, onClick = {
+                            addPetViewModel.onTypeChange(typeList[index])
+                            expandedState = false
+                        })
                     }
                 }
             }
@@ -140,14 +136,11 @@ fun AddPetScreen(
             var breedSelected = addPetViewModel._breed
             var expanded by remember { mutableStateOf(false) }
 
-            ExposedDropdownMenuBox(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(25)),
+            ExposedDropdownMenuBox(modifier = Modifier.clip(RoundedCornerShape(25)),
                 expanded = expanded,
                 onExpandedChange = {
                     expanded = it
-                }
-            ) {
+                }) {
                 TextField(
                     value = breedSelected,
                     onValueChange = {},
@@ -160,15 +153,12 @@ fun AddPetScreen(
                     onDismissRequest = { expanded = false },
                 ) {
                     breedList.forEachIndexed { index, item ->
-                        DropdownMenuItem(
-                            text = {
-                                Text(item)
-                            },
-                            onClick = {
-                                addPetViewModel.onBreedChange(breedList[index])
-                                expanded = false
-                            }
-                        )
+                        DropdownMenuItem(text = {
+                            Text(item)
+                        }, onClick = {
+                            addPetViewModel.onBreedChange(breedList[index])
+                            expanded = false
+                        })
                     }
 
                 }
@@ -181,10 +171,10 @@ fun AddPetScreen(
             }
 
             val photoPicker =
-                rememberLauncherForActivityResult(
-                    contract = ActivityResultContracts.PickVisualMedia(),
+                rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia(),
                     onResult = {
                         uri = it
+                        addPetViewModel.onImageChange(uri)
                     })
 
             ElevatedButton(onClick = {
@@ -193,12 +183,13 @@ fun AddPetScreen(
                         ActivityResultContracts.PickVisualMedia.ImageOnly
                     )
                 )
+
             }) {
                 Text(
                     text = "Imagen", modifier = Modifier.padding(horizontal = 90.dp)
                 )
             }
-            Log.d("uri ","$uri")
+            Log.d("uri ", "$uri")
 
             Spacer(modifier = Modifier.height(50.dp))
             Row(
@@ -210,7 +201,7 @@ fun AddPetScreen(
                     border = BorderStroke(
                         width = 1.dp, color = MaterialTheme.colorScheme.secondary
                     ),
-                    onClick = { addPetViewModel.addPet() },
+                    onClick = { addPetViewModel.addPet(context) },
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                 ) {
                     Text(text = "Guardar", color = MaterialTheme.colorScheme.onPrimary)
