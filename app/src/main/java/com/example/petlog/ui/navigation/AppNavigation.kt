@@ -1,5 +1,6 @@
 package com.example.petlog.ui.navigation
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -9,17 +10,16 @@ import androidx.navigation.navArgument
 import com.example.petlog.ui.screens.AddPetScreen
 import com.example.petlog.ui.screens.HomeScreen
 import com.example.petlog.ui.screens.PetDetailScreen
-import com.example.petlog.ui.viewModel.PetsViewModel
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(context: Context) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = AppScreens.HomeScreen.route) {
         composable(route = AppScreens.HomeScreen.route) {
             HomeScreen(navController)
         }
         composable(route = AppScreens.AddPetScreen.route) {
-            AddPetScreen(navController)
+            AddPetScreen(navController, context)
         }
         composable(
             route = "${AppScreens.PetDetailScreen.route}/{name}",
